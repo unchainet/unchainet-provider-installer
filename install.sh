@@ -51,4 +51,4 @@ echo "[unchainet-installer] enabling port 10250"
 sudo iptables -A INPUT -p tcp --dport 10250 -j ACCEPT
 
 echo "[unchainet-installer] Initializing Kubernetes services and connecting to the cluster"
-sudo kubeadm join 147.75.90.57:6443 --token ut2lbx.di4l3qm3k5bac63y --discovery-token-ca-cert-hash sha256:ad6db0eeceb40fcc2139305ac5b4c6131891350cfc4900ada8b53762e330259e
+sudo kubeadm join 147.75.90.57:6443 --token $2 --discovery-token-ca-cert-hash sha256:ad6db0eeceb40fcc2139305ac5b4c6131891350cfc4900ada8b53762e330259e
