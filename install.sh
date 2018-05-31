@@ -59,11 +59,12 @@ echo "[unchainet-installer] Initializing Kubernetes services and connecting to t
 sudo kubeadm join 147.75.90.57:6443 --token $2 --discovery-token-ca-cert-hash sha256:ad6db0eeceb40fcc2139305ac5b4c6131891350cfc4900ada8b53762e330259e
 
 kubernetesNodeId=$(cat /etc/hostname)
+resourceBucket=$1
 generate_post_data()
 {
   cat <<EOF
 {
-  "resourceBucket": "$1",
+  "resourceBucket": "$resourceBucket",
   "name": "$kubernetesNodeId",
   "kubernetesNodeId": "$kubernetesNodeId",
   "kubernetesIpAddress": ""
