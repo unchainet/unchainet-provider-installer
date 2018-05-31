@@ -74,5 +74,5 @@ EOF
 curl -i \
 -H "Accept: application/json" \
 -H "Content-Type:application/json" \
--H "Authorization: $3"  \
+-H "Authorization: Bearer $3"  \
 -X POST --data "$(generate_post_data)" "https://api.unchainet.com/api/computeNodes"
