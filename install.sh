@@ -13,6 +13,11 @@ then
     echo 'Missed argument : join token'
     exit 1
 fi
+if [ ! -n "$3" ]
+then
+    echo 'Missed argument : api server token'
+    exit 1
+fi
 if [ "$(id -u)" != "0" ]; then
 	echo "You need to run this command with sudo"
 	exit 1
@@ -52,3 +57,22 @@ sudo iptables -A INPUT -p tcp --dport 10250 -j ACCEPT
 
 echo "[unchainet-installer] Initializing Kubernetes services and connecting to the cluster"
 sudo kubeadm join 147.75.90.57:6443 --token $2 --discovery-token-ca-cert-hash sha256:ad6db0eeceb40fcc2139305ac5b4c6131891350cfc4900ada8b53762e330259e
+
+kubernetesNodeId=$(cat /etc/hostname)
+generate_post_data()
+{
+  cat <<EOF
+{
+  "resourceBucket": "$1",
+  "name": "$kubernetesNodeId",
+  "kubernetesNodeId": "$kubernetesNodeId",
+  "kubernetesIpAddress": ""
+}
+EOF
+}
+
+curl -i \
+-H "Accept: application/json" \
+-H "Content-Type:application/json" \
+-H "Authorization: $3"  \
+-X POST --data "$(generate_post_data)" "https://api.unchainet.com/api/computeNodes"
