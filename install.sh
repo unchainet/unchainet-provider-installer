@@ -58,6 +58,7 @@ sudo iptables -A INPUT -p tcp --dport 10250 -j ACCEPT
 echo "[unchainet-installer] Initializing Kubernetes services and connecting to the cluster"
 sudo kubeadm join 147.75.90.57:6443 --token $2 --discovery-token-ca-cert-hash sha256:ad6db0eeceb40fcc2139305ac5b4c6131891350cfc4900ada8b53762e330259e
 
+publicIp=`curl v4.ifconfig.co`
 kubernetesNodeId=$(cat /etc/hostname)
 resourceBucket=$1
 generate_post_data()
@@ -67,7 +68,7 @@ generate_post_data()
   "resourceBucket": "$resourceBucket",
   "name": "$kubernetesNodeId",
   "kubernetesNodeId": "$kubernetesNodeId",
-  "kubernetesIpAddress": ""
+  "kubernetesIpAddress": "$publicIp"
 }
 EOF
 }
