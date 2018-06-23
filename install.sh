@@ -52,11 +52,16 @@ sudo apt-get update
 echo "[unchainet-installer] installing kubernetes"
 sudo apt-get install -y kubelet kubeadm kubectl
 
-echo "[unchainet-installer] enabling port 10250"
+echo "[unchainet-installer] enabling ports, disabling swap, starting docker"
 sudo iptables -A INPUT -p tcp --dport 10250 -j ACCEPT
+sudo swapoff -a
+sudo systemctl start docker.service
+sudo systemctl daemon-reload
+sudo systemctl enable kubelet.service
+sudo systemctl daemon-reload
 
 echo "[unchainet-installer] Initializing Kubernetes services and connecting to the cluster"
-sudo kubeadm join 147.75.90.57:6443 --token $2 --discovery-token-ca-cert-hash sha256:ad6db0eeceb40fcc2139305ac5b4c6131891350cfc4900ada8b53762e330259e
+sudo kubeadm join 147.75.88.183:6443 --token $2 --discovery-token-ca-cert-hash sha256:b79caa062296703d138be28d04c9c7c82c108f325c360477af8ea795d2b28fdb
 
 publicIp=`curl v4.ifconfig.co`
 kubernetesNodeId=$(cat /etc/hostname)
