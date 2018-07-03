@@ -50,7 +50,7 @@ EOF
 sudo apt-get update
 
 echo "[unchainet-installer] installing kubernetes"
-sudo apt-get install -y kubelet kubeadm kubectl
+sudo apt-get install -y kubelet=1.10.5-00 kubeadm=1.10.5-00 kubectl=1.10.5-00
 
 echo "[unchainet-installer] enabling ports, disabling swap, starting docker"
 sudo iptables -A INPUT -p tcp --dport 10250 -j ACCEPT
