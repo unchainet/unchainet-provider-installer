@@ -56,7 +56,7 @@ EOF
 yum upgrade
 
 echo "[unchainet-installer] installing kubernetes"
-yum install -y kubelet kubeadm kubectl
+yum install -y kubelet-1.10.5-0 kubeadm-1.10.5-0 kubectl-1.10.5-0
 
 ## Adding port 10250 to CSF
 echo "[unchainet-installer] enabling ports, disabling swap, starting docker"
